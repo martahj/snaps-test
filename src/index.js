@@ -2,7 +2,7 @@
 
 // const provider = new ethers.providers.Web3Provider(wallet);
 
-
+const baseUrl = 'http://localhost:3000/api';
 // const erc721AbbreviatedAbi = [
 //   {
 //     inputs: [
@@ -77,7 +77,14 @@ wallet.registerRpcMessageHandler(async (originString, requestObject) => {
 });
 
 async function getContract(url) {
-  return '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'; // TODO
+  // return null;
+  // return '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'; // TODO
+  const response = await fetch(`${baseUrl}/fetch?origin=${url}`)
+  if (!response.ok) {
+    return null;
+  }
+  const result = await response.json();
+  return result.contract;
 }
 
 function getEtherscanAddress(contract) {
