@@ -28,49 +28,54 @@ const baseUrl = 'http://localhost:3000/api';
 wallet.registerRpcMessageHandler(async (originString, requestObject) => {
   switch (requestObject.method) {
     case 'hello':
-      // const got = await provider.listAccounts();
-      // console.log({ got });
-      const contract = await getContract(originString);
-
-      if (!contract) {
-        await showUserMessage(
-          'Could not verify site project',
-          `We couldn't verify that this site is associated with a SuppDapp project. Please proceed with caution, as it may be a scam.`,
-        );
-        return {
-          valid: false,
-        }
-      }
-
-      const etherscanAddress = getEtherscanAddress(contract);
-
-      // const contractInstance = new ethers.Contract(contract, erc721AbbreviatedAbi, provider);
-
-      let openseaUrl;
-      let error;
       try {
-        openseaUrl = await getOpenseaUrl(contract);
-      } catch (err) {
-        error = err;
-      }
+        // const got = await provider.listAccounts();
+        // console.log({ got });
+        const contract = await getContract(originString);
 
-      if (error || !openseaUrl) {
+        if (!contract) {
+          await showUserMessage(
+            'Could not verify site project',
+            `We couldn't verify that this site is associated with a SuppDapp project. Please proceed with caution, as it may be a scam.`,
+          );
+          return {
+            valid: false,
+          }
+        }
+
+        const etherscanAddress = getEtherscanAddress(contract);
+
+        // const contractInstance = new ethers.Contract(contract, erc721AbbreviatedAbi, provider);
+
+        let openseaUrl;
+        let error;
+        try {
+          openseaUrl = await getOpenseaUrl(contract);
+        } catch (err) {
+          error = err;
+        }
+
+        if (error || !openseaUrl) {
+          showUserMessage(
+            `Verified project`,
+            `We verified that this url is associated with the contract at ${etherscanAddress} but were not able to find an associated OpenSea collection. Carefully review this information; if it does not match your expectations, it may be a scam.`
+          )
+          return {
+            valid: true,
+            contract,
+          }
+        }
+
         showUserMessage(
           `Verified project`,
-          `We verified that this url is associated with the contract at ${etherscanAddress} but were not able to find an associated OpenSea collection. Carefully review this information; if it does not match your expectations, it may be a scam.`
-        )
-        return {
-          valid: true,
-          contract,
-        }
+          `We verified that this url is associated with the contract at ${etherscanAddress} and at OpenSea at ${openseaUrl}. Carefully review this information; if it does not match your expectations, it may be a scam.`
+        );
+
+        return { valid: true, contract };
+      } catch(err) {
+        console.warn(err);
+        return { valid: false }
       }
-
-      showUserMessage(
-        `Verified project`,
-        `We verified that this url is associated with the contract at ${etherscanAddress} and at OpenSea at ${openseaUrl}. Carefully review this information; if it does not match your expectations, it may be a scam.`
-      );
-
-      return { valid: true, contract };
     default:
       throw new Error('Method not found.');
   }

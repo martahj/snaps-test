@@ -3,6 +3,19 @@
 The "Hello, world!" of MetaMask Snaps, and also a GitHub template repository.
 For instructions, see [the MetaMask documentation](https://docs.metamask.io/guide/snaps.html).
 
+## SuppDapp Instructions
+
+#### Requirements
+
+You must have MetaMask's development build, Flask, installed to use Snaps. MetaMask Flask only works in Google Chrome. Remove other MetaMask installations and install Flask: https://metamask.io/flask/
+
+#### Instructions
+1. Install dependencies: `yarn install`
+2. Build snap: `yarn build:clean`
+3. Serve snap: `yarn serve`
+
+The snap will not reload reliably so you will need to stop the server and restart after making changes. You will not have to reload the web page referencing the snap but you will need to reconnect it.
+
 ## Cloning
 
 If you clone or create this repository outside the MetaMask GitHub organization, you probably want to run `./scripts/cleanup.sh` to remove some files that will not work properly outside the MetaMask GitHub organization.
