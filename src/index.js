@@ -2,7 +2,7 @@
 
 // const provider = new ethers.providers.Web3Provider(wallet);
 
-const baseUrl = 'http://localhost:3000/api';
+const baseUrl = 'https://supp-dapp.vercel.app/api';
 // const erc721AbbreviatedAbi = [
 //   {
 //     inputs: [
