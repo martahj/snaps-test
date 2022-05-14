@@ -1,10 +1,10 @@
 {
-  "name": "@metamask/template-snap",
+  "name": "snaps-test",
   "version": "0.7.0",
   "description": "The 'Hello, world!' of MetaMask Snaps.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/snap-template.git"
+    "url": "https://github.com/martahj/snaps-test.git"
   },
   "license": "MIT",
   "main": "src/index.js",
